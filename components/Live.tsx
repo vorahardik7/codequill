@@ -4,7 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import { CursorChat } from "./cursor/CursorChat";
 import { CursorMode } from "@/types/type";
 
-export const Live = () => {
+type Props = {
+    canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+};
+
+export const Live = ({ canvasRef }: Props) => {
     const others = useOthers();
     const [{ cursor }, updateMyPresence] = useMyPresence() as any;
 
@@ -64,12 +68,14 @@ export const Live = () => {
 
     return (
         <div
+            id="canvas"
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
             onPointerDown={handlePointerDown}
             className="h-[100vh] w-full flex justify-center items-center text-center"
         >
-            <h1 className="text-5xl text-white">Codequill</h1>
+            {/* <h1 className="text-5xl text-white">Codequill</h1> */}
+            <canvas ref={canvasRef} />
 
             {cursor && (
                 <CursorChat
